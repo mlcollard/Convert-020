@@ -38,6 +38,11 @@ void toUpper(char& c) {
     c = std::toupper(c);
 }
 
+// @concern std::tolower, toLower[out]
+void toLower(char& c) {
+    c = std::tolower(c);
+}
+
 typedef void (*Conversion)(char& c);
 
 // @concern iteration, apply, myforeach()
@@ -70,13 +75,11 @@ int main(int argc, char* argv[]) {
     // @concern error handling, std::cerr
     if (isOptionUpper(option)) {
 
-        for (auto pc = text.begin(); pc != text.end(); ++pc)
-            toUpper(*pc);
+        myforeach(text.begin(), text.end(), toUpper);
 
     } else if (isOptionLower(option)) {
 
-        for (auto pc = text.begin(); pc != text.end(); ++pc)
-            *pc = std::tolower(*pc);
+        myforeach(text.begin(), text.end(), toLower);
 
     } else {
 
