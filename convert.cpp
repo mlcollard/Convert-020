@@ -26,6 +26,13 @@ bool isOptionLower(const std::string& s) {
     return s == "--lower";
 }
 
+// is the option for uppercase
+// @concern "--upper", std::string, isOptionUpper[out]
+bool isOptionUpper(const std::string& s) {
+
+    return s == "--upper";
+}
+
 int main(int argc, char* argv[]) {
 
     // requires conversion option and string
@@ -44,10 +51,10 @@ int main(int argc, char* argv[]) {
     std::string text(argv[2]);
 
     // convert the string according to the option
-    // @concern option, text, "--upper"
+    // @concern option, text, isOptionUpper(), isOptionLower()
     // @concern std::string, std::toupper(), std::tolower(), iteration
     // @concern error handling, std::cerr
-    if (option == "--upper") {
+    if (isOptionUpper(option)) {
 
         for (auto pc = text.begin(); pc != text.end(); ++pc)
             *pc = std::toupper(*pc);
