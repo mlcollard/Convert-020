@@ -15,7 +15,7 @@
 
 // output a character
 // @concern output format, std::cout, output[out]
-void output(char c) {
+void output(char& c) {
     std::cout << c;
 }
 
@@ -31,6 +31,15 @@ bool isOptionLower(const std::string& s) {
 bool isOptionUpper(const std::string& s) {
 
     return s == "--upper";
+}
+
+typedef void (*Conversion)(char& c);
+
+// @concern iteration, apply, myforeach()
+void myforeach(std::string::iterator begin, std::string::iterator end, Conversion apply) {
+
+    for (auto pc = begin; pc != end; ++pc)
+        apply(*pc);
 }
 
 int main(int argc, char* argv[]) {
@@ -71,9 +80,8 @@ int main(int argc, char* argv[]) {
     }
 
     // output converted text
-    // @concern text, std::string, iteration
-    for (auto pc = text.cbegin(); pc != text.cend(); ++pc)
-        output(*pc);
+    // @concern text, output()
+    myforeach(text.begin(), text.end(), output);
     std::cout << '\n';
 
     return 0;
