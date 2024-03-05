@@ -19,6 +19,13 @@ void output(char c) {
     std::cout << c;
 }
 
+// is the option for lowercase
+// @concern "--lower", std::string, isOptionLower[out]
+bool isOptionLower(const std::string& s) {
+
+    return s == "--lower";
+}
+
 int main(int argc, char* argv[]) {
 
     // requires conversion option and string
@@ -37,7 +44,7 @@ int main(int argc, char* argv[]) {
     std::string text(argv[2]);
 
     // convert the string according to the option
-    // @concern option, text, "--upper", "--lower"
+    // @concern option, text, "--upper"
     // @concern std::string, std::toupper(), std::tolower(), iteration
     // @concern error handling, std::cerr
     if (option == "--upper") {
@@ -45,7 +52,7 @@ int main(int argc, char* argv[]) {
         for (auto pc = text.begin(); pc != text.end(); ++pc)
             *pc = std::toupper(*pc);
 
-    } else if (option == "--lower") {
+    } else if (isOptionLower(option)) {
 
         for (auto pc = text.begin(); pc != text.end(); ++pc)
             *pc = std::tolower(*pc);
@@ -57,7 +64,7 @@ int main(int argc, char* argv[]) {
     }
 
     // output converted text
-    // @concern output format, text, std::string, iteration, std::cout
+    // @concern text, std::string, iteration
     for (auto pc = text.cbegin(); pc != text.cend(); ++pc)
         output(*pc);
     std::cout << '\n';
