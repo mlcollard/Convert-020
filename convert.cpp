@@ -12,25 +12,12 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <unordered_map>
 
 // output a character
 // @concern output format, std::cout, output[out]
 void output(char& c) {
     std::cout << c;
-}
-
-// is the option for lowercase
-// @concern "--lower", std::string, isOptionLower[out]
-bool isOptionLower(const std::string& s) {
-
-    return s == "--lower";
-}
-
-// is the option for uppercase
-// @concern "--upper", std::string, isOptionUpper[out]
-bool isOptionUpper(const std::string& s) {
-
-    return s == "--upper";
 }
 
 // @concern std::toupper, toUpper[out]
@@ -44,6 +31,13 @@ void toLower(char& c) {
 }
 
 typedef void (*Conversion)(char& c);
+
+// @concern "--upper", "--lower", toUpper(), toLower()
+// @concern conversionOption, std::unordered_map<>
+const std::unordered_map<std::string, Conversion> conversionOption{
+    { "--upper", toUpper },
+    { "--lower", toLower },
+};
 
 // @concern iteration, apply, myforeach()
 void myforeach(std::string::iterator begin, std::string::iterator end, Conversion apply) {
@@ -70,23 +64,14 @@ int main(int argc, char* argv[]) {
     std::string text(argv[2]);
 
     // map the conversion from the option
-    // @concern option, isOptionUpper(), isOptionLower()
-    // @concern std::string, toUpper(), toLower()
+    // @concern option
     // @concern error handling, std::cerr, convert()[out]
-    Conversion convert = nullptr;
-    if (isOptionUpper(option)) {
-
-        convert = toUpper;
-
-    } else if (isOptionLower(option)) {
-
-        convert = toLower;
-
-    } else {
-
+    auto conversionEntry = conversionOption.find(option);
+    if (conversionEntry == conversionOption.end()) {
         std::cerr << "Invalid conversion option: " << option << '\n';
         return 1;
     }
+    auto convert = conversionEntry->second;
 
     // convert the string according to the option
     // @concern text, convert
