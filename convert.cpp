@@ -20,23 +20,13 @@ void output(char& c) {
     std::cout << c;
 }
 
-// @concern std::toupper, toUpper[out]
-void toUpper(char& c) {
-    c = std::toupper(c);
-}
-
-// @concern std::tolower, toLower[out]
-void toLower(char& c) {
-    c = std::tolower(c);
-}
-
 typedef void (*Conversion)(char& c);
 
 // @concern "--upper", "--lower", toUpper(), toLower()
 // @concern conversionOption, std::unordered_map<>
 const std::unordered_map<std::string, Conversion> conversionOption{
-    { "--upper", toUpper },
-    { "--lower", toLower },
+    { "--upper", [](char& c) { c = std::toupper(c); } },
+    { "--lower", [](char& c) { c = std::tolower(c); } },
 };
 
 // @concern iteration, apply, myforeach()
